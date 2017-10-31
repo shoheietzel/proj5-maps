@@ -27,6 +27,13 @@
  integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
  crossorigin="anonymous">
 </script>
+<!-- Hosted version of Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+  integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+  crossorigin=""></script>
 
 <!-- Our own css file -->
 <link rel="stylesheet" href="/static/homepage.css" />
@@ -81,7 +88,7 @@
                     $("#message").html("we put ur input in the results field");
                     $("#attempt").val("");
                     $("#results").append(txt + ", ");
-                  } `
+                  }
                  }
              );
      });
