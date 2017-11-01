@@ -6,6 +6,25 @@ import logging
 import config                       # Our own module
 
 
+def process(raw):
+    app.logger.info("in process")
+    cooked = {}
+    i = 0
+    for line in raw:
+        parts = line.split(';')
+        if len(parts) != 5:
+            raise ValueError("Text file format is invalid")
+        else:
+            cooked[i] = {}
+            cooked[i]['name'] = parts[0]
+            cooked[i]['lat'] = float(parts[1])
+            cooked[i]['lng'] = float(parts[2])
+            cooked[i]['addy'] = parts[3]
+            cooked[i]['sport'] = parts[4]
+        i += 1
+    return cooked
+
+
 ############# Globals #############
 app = flask.Flask(__name__)
 CONFIG = config.configuration()
@@ -17,21 +36,14 @@ app.secret_key = CONFIG.SECRET_KEY  # Should allow using session variables
 @app.route("/index")
 def index():
     """The main page of the application"""
-    return flask.render_template('homepage.html')
-
-
-############# AJAX request handlers #############
-# (return JSON, rather than rendering pages)
-@app.route("/_check")
-def check():
-    """
-    """
-    app.logger.debug("Got a JSON request")
-    rslt = {"test": True}
-    return flask.jsonify(result=rslt)
-
+    f = open("data/volleyball.txt")
+    poi = process(f)
+    app.logger.info(poi)
+    return flask.render_template('homepage.html', poi=poi)
 
 ############# Error handlers #############
+
+
 @app.errorhandler(404)
 def error_404(e):
     app.logger.warning("++ 404 error: {}".format(e))
@@ -53,6 +65,7 @@ def error_403(e):
 
 ############# Main #############
 if __name__ == "__main__":
+
     if CONFIG.DEBUG:
         app.debug = True
         app.logger.setLevel(logging.DEBUG)

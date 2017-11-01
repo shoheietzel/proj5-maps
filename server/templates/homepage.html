@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>FIXME</title>
+<title>EUG VB</title>
 
 <!-- Javascript and Cascading Style Sheets (css) libraries -->
 <!-- jquery -->
@@ -27,42 +27,105 @@
  integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
  crossorigin="anonymous">
 </script>
+
 <!-- Hosted version of Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-  crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-  integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-  crossorigin=""></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+
+<!-- MapQuest plugin for Leaflet -->
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=JfUoyzqMu3P4a7x3M4QAjQOokO69kugU"></script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-geocoding.js?key=JfUoyzqMu3P4a7x3M4QAjQOokO69kugU"></script>
 
 <!-- Our own css file -->
 <link rel="stylesheet" href="/static/homepage.css" />
+
+<!-- Script for mep -->
+<script type="text/javascript">
+
+        window.onload = function() {
+            //init map
+            map = L.map('map', {
+                    layers: MQ.mapLayer(),
+                    center: [44.0434092, -123.0758299],
+                    zoom: 14 })
+
+
+
+            function addMarker(name, lat, lng, addy, sport) {
+              poipopup = L.popup([lat, lng])
+                .setContent(name + '<br/>' + addy + '<br/>' + ' --' + sport + '-- ');
+              poimarker = L.marker([lat, lng])
+                .bindPopup(poipopup).openPopup()
+                .addTo(map);
+            }
+
+            var poi = {{ poi|tojson }};
+
+            for (i = 0; i < Object.keys(poi).length; i++) {
+              addMarker(poi[i]['name'], poi[i]['lat'], poi[i]['lng'], poi[i]['addy'], poi[i]['sport']);
+            }
+
+            var popup = L.popup(),
+                geocode,
+                map;
+            var marker = L.marker();
+                map.on('click', function(e) {
+                    popup
+                        .setLatLng(e.latlng);
+                    marker
+                        .setLatLng(e.latlng)
+                        .bindPopup(popup).openPopup()
+                        .addTo(map);
+
+                    geocode.reverse(e.latlng);
+
+                });
+
+            geocode = MQ.geocode().on('success', function(e) {
+                popup.setContent(geocode.describeLocation(e.result.best));
+            });
+        }
+
+
+    </script>
 </head>
 
 <body>
 <div class="container">
   <div class="row">
-    <div class="col-xs-6 text-center">
-      <h1>[FIXME]</h1>
+    <div class="col-xs-12 text-center">
+      <h1>Places to Play Volleyball in Eugene Area</h1>
     </div>
   </div>
   <br>
-<div class="row">
-  <div class="col-xs-6 text-center">
-    <form id="entry"> <!-- Keyup Function based on this -->
-      <label for="attempt">Please input a letter:</label>
-      <input id="attempt" name="attempt" type="text" width="15"
-        autocomplete="off"  autofocus />
-    </form>
+
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <div id="map" style="height: 80%;"></div>
+    </div>
   </div>
-</div>
 
-<p id="message"> </p>  <!-- JavaScript will insert text here -->
-<h3>Letters you've typed</h3>
-<br>
-<p id="results"> </p>
+  <!-- some hidden stuff from prev framework [DELETE WHEN FINISHED]
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <form id="entry"> <!-- Keyup Function based on this - - >
+        <label for="attempt">Please input a letter:</label>
+        <input id="attempt" name="attempt" type="text" width="15"
+          autocomplete="off"  autofocus />
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <p id="message"> </p>  <!-- JavaScript will insert text here - - >
+      <h3>Letters you've typed</h3>
+      <br>
+      <p id="results"> </p>
+    </div>
+  </div>
+  -->
+
 <script>
-
   // Suppress normal form submission
   $("#entry").submit( function(event) {
      event.preventDefault();

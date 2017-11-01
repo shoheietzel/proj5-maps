@@ -1,0 +1,4 @@
+Amazon Park Sand Volleyball Courts; 44.0356263; -123.0887333; 205 W 24th Ave, Eugene, OR 97405; Sand Volleyball
+UO Student Recreation Center; 44.0427075; -123.0752655; 1320 E 15th Ave, Eugene, OR 97403; Indoor Volleyball
+Carson Sand Volleyball Court; 44.044682; -123.071359; Between Carson and LLC buildings; Sand Volleyball
+McArthur Court; 44.0417273; -123.0752231; 1601 University Street, Eugene, OR 97403; Indoor Volleyball
