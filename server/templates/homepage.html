@@ -33,8 +33,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 
 <!-- MapQuest plugin for Leaflet -->
-<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=JfUoyzqMu3P4a7x3M4QAjQOokO69kugU"></script>
-<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-geocoding.js?key=JfUoyzqMu3P4a7x3M4QAjQOokO69kugU"></script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key={{g.API_key}}">
+</script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-geocoding.js?key={{g.API_key}}""></script>
 
 <!-- Our own css file -->
 <link rel="stylesheet" href="/static/homepage.css" />
@@ -48,8 +49,6 @@
                     layers: MQ.mapLayer(),
                     center: [44.0434092, -123.0758299],
                     zoom: 14 })
-
-
 
             function addMarker(name, lat, lng, addy, sport) {
               poipopup = L.popup([lat, lng])
@@ -104,26 +103,6 @@
       <div id="map" style="height: 80%;"></div>
     </div>
   </div>
-
-  <!-- some hidden stuff from prev framework [DELETE WHEN FINISHED]
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <form id="entry"> <!-- Keyup Function based on this - - >
-        <label for="attempt">Please input a letter:</label>
-        <input id="attempt" name="attempt" type="text" width="15"
-          autocomplete="off"  autofocus />
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <p id="message"> </p>  <!-- JavaScript will insert text here - - >
-      <h3>Letters you've typed</h3>
-      <br>
-      <p id="results"> </p>
-    </div>
-  </div>
-  -->
 
 <script>
   // Suppress normal form submission

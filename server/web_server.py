@@ -29,6 +29,7 @@ def process(raw):
 app = flask.Flask(__name__)
 CONFIG = config.configuration()
 app.secret_key = CONFIG.SECRET_KEY  # Should allow using session variables
+app.API_key = CONFIG.API_KEY
 
 
 ############# Pages #############
@@ -39,6 +40,7 @@ def index():
     f = open("data/volleyball.txt")
     poi = process(f)
     app.logger.info(poi)
+    flask.g.API_key = app.API_key
     return flask.render_template('homepage.html', poi=poi)
 
 ############# Error handlers #############
